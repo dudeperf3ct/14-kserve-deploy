@@ -1,0 +1,12 @@
+apiVersion: "serving.kserve.io/v1beta1"
+kind: "InferenceService"
+metadata:
+  name: "sentiment-v2"
+spec:
+  predictor:
+    serviceAccountName: sa
+    model:
+      modelFormat:
+        name: pytorch
+      protocolversion: v2
+      storageUri: "s3://kf-serving-sentiment/v1"
