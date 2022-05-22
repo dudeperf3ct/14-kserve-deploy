@@ -2,6 +2,10 @@
 
 KServe is a standard Model Inference Platform on Kubernetes. [Kserve](https://kserve.github.io/website/0.8/) (formely know as KFServing) aims to solve production model serving use cases by providing performant, high abstraction interfaces for common ML frameworks like Tensorflow, XGBoost, ScikitLearn, PyTorch, and ONNX.
 
+<p align="center">
+<img src="kserve.png" alt="kserve architecture" style="height: 300px; width:500px;"/>
+</p>
+
 Some of the features of KSever include
 
 * Provides high scalability, density packing and intelligent routing using ModelMesh
@@ -14,8 +18,8 @@ In this exercise, we will deploy our huggingface transformer model using KServe.
 
 Pre-requisites
 
-* Kind
-* Kubectl
+* [Kind](https://kind.sigs.k8s.io/docs/user/quick-start/)
+* [Kubectl](https://kubernetes.io/docs/tasks/tools/)
 
 If kubernetes version >= 1.24 (`kubectl version`)
 
@@ -103,10 +107,17 @@ kubectl apply -f secrets/s3_secrets.yaml
 kubectl apply -f torchserve.yaml
 # monitor status of service
 kubectl get isvc
+# describe the service
+kubectl describe isvc sentiment
 # in separate terminal
 watch -n0.5 kubectl get pods
 # in separate terminal
 kubectl logs <pod-name> -f
+```
+
+Once the service is deployed and in ready state, test the endpoints.
+
+```bash
 # once service status is ready in `kubectl get isvc sentiment`
 # check if URL is assigned to the inference service, if not try debubbing using mnist.yaml file and see if it succeeds
 # in separate terminal do port forwarding
